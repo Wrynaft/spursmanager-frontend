@@ -1,0 +1,237 @@
+<div class="px-4">
+  <h1>Roster ({{size}})</h1>
+  <p>Total Salary: {{salary}}</p>
+</div>
+<p class="px-4">
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Search
+  </button>
+</p>
+<div class="collapse px-4" id="collapseExample">
+  <form #searchForm="ngForm" (ngSubmit)="onSearchPlayer(searchForm)" class="d-flex flex-row align-items-center flex-wrap my-2 my-lg-0 gy-2">
+    <label for="nameSearch">Name</label>
+    <input class="form-control mr-sm-2" ngModel name="name" id="nameSearch" type="search" placeholder="Search" aria-label="Search">
+    <div class="d-flex flex-row align-items-center flex-wrap g-3 mt-1 mb-2">
+      <div class="row">
+      <div class="col-1" id="ageFilter"> 
+        <label for="ageFilter">Age</label>
+        <select class="form-select" ngModel name="ageFilter">
+          <option selected>Filter by</option>
+          <option value=">=">>=</option>
+          <option value="==">==</option>
+          <option value="<="><=</option>
+        </select>
+      </div>
+      <div class="col-1 me-md-5">
+          <input type="number" ngModel name="age" class="form-control mt-4">
+      </div>
+      <div class="col-1" id="heightFilter"> 
+        <label for="heightFilter">Height</label>
+        <select class="form-select" ngModel name="heightFiler">
+          <option selected>Filter by</option>
+          <option value=">=">>=</option>
+          <option value="==">==</option>
+          <option value="<="><=</option>
+        </select>
+    </div>
+    <div class="col-1 me-lg-5">
+        <input type="number" ngModel name="height" class="form-control mt-4">
+    </div>
+    <div class="col-1" id="weightFilter"> 
+      <label for="weightFilter">Weight</label>
+      <select class="form-select" ngModel name="weightFilter">
+        <option selected>Filter by</option>
+        <option value=">=">>=</option>
+        <option value="==">==</option>
+        <option value="<="><=</option>
+      </select>
+  </div>
+  <div class="col-1 me-lg-5 ">
+      <input type="number" class="form-control mt-4" ngModel name="weight">
+  </div>
+  <div class="col-1 me-lg-5" id="posFilter"> 
+    <label for="posFilter">Position</label>
+    <select class="form-select" ngModel name="posFilter">
+      <option selected>-</option>
+      <option value="1">C</option>
+      <option value="2">F</option>
+      <option value="3">G</option>
+    </select>
+</div>
+<div class="col-1" id="salaryFilter"> 
+  <label for="salaryFilter">Salary</label>
+  <select class="form-select" ngModel name="salaryFfilter">
+    <option selected>Filter by</option>
+    <option value=">=">>=</option>
+    <option value="==">==</option>
+    <option value="<="><=</option>
+  </select>
+</div>
+<div class="col-1 me-lg-5 ">
+  <input type="number" class="form-control mt-4" ngModel name="salary">
+</div>
+</div>
+<div class="row">
+<div class="col-1" id="pointsFilter"> 
+  <label for="pointsFilter">Points</label>
+  <select class="form-select" ngModel name="pointsFilter">
+    <option selected>Filter by</option>
+    <option value=">=">>=</option>
+    <option value="==">==</option>
+    <option value="<="><=</option>
+  </select>
+</div>
+<div class="col-1 me-lg-5 ">
+  <input type="number" class="form-control mt-4" ngModel name="points">
+</div>
+<div class="col-1" id="rbFilter"> 
+  <label for="rbFilter">Rebounds</label>
+  <select class="form-select" ngModel name="rbFilter">
+    <option selected>Filter by</option>
+    <option value=">=">>=</option>
+    <option value="==">==</option>
+    <option value="<="><=</option>
+  </select>
+</div>
+<div class="col-1 me-lg-5 ">
+  <input type="number" class="form-control mt-4" ngModel name="rebounds">
+</div>
+<div class="col-1" id="astFilter"> 
+  <label for="astFilter">Assists</label>
+  <select class="form-select" ngModel name="astFilter">
+    <option selected>Filter by</option>
+    <option value=">=">>=</option>
+    <option value="==">==</option>
+    <option value="<="><=</option>
+  </select>
+</div>
+<div class="col-1 me-lg-5 ">
+  <input type="number" class="form-control mt-4" ngModel name="assists">
+</div>
+<div class="col-1" id="stlFilter"> 
+  <label for="stlFilter">Steals</label>
+  <select class="form-select" ngModel name="stlFilter">
+    <option selected>Filter by</option>
+    <option value=">=">>=</option>
+    <option value="==">==</option>
+    <option value="<="><=</option>
+  </select>
+</div>
+<div class="col-1 me-lg-5 ">
+  <input type="number" class="form-control mt-4" ngModel name="steals">
+</div>
+<div class="col-1" id="blkFilter"> 
+  <label for="weightFilter">Blocks</label>
+  <select class="form-select" ngModel name="blkFilter">
+    <option selected>Filter by</option>
+    <option value=">=">>=</option>
+    <option value="==">==</option>
+    <option value="<="><=</option>
+  </select>
+</div>
+<div class="col-1 me-lg-5 ">
+  <input type="number" class="form-control mt-4" ngModel name="blocks">
+</div>
+</div>
+  </div>
+
+    <button [disabled]="searchForm.invalid" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</div>
+
+<section class="w-100 px-4 py-5" style="background-color: #9de2ff; border-radius: .5rem .5rem 0 0;">
+    <div class="row d-flex justify-content-center gy-5">
+      <div *ngFor="let player of players" class="col col-md-9 col-lg-7 col-xl-6">
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body p-4">
+            <div class="d-flex">
+              <div class="flex-shrink-0">
+                <img src="assets/{{player?.name}}.png"
+                  alt="assets/default.png" class="img-fluid" style="width: 270px;  border-radius: 10px;" onerror="this.onerror=null;this.src=this.alt;">
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h5 class="mb-1">{{player?.name}}</h5>
+                <div class="d-flex justify-content-start rounded-3 p-2 mb-2 bg-body-tertiary">
+                    <div>
+                      <p class="small text-muted mb-1">Age</p>
+                      <p class="mb-0">{{player?.age}}</p>
+                    </div>
+                    <div class="px-3">
+                      <p class="small text-muted mb-1">Height</p>
+                      <p class="mb-0">{{player?.height}}</p>
+                    </div>
+                    <div class="px-3">
+                      <p class="small text-muted mb-1">Weight</p>
+                      <p class="mb-0">{{player?.weight}}</p>
+                    </div>
+                    <div class="px-3">
+                      <p class="small text-muted mb-1">Position</p>
+                      <p class="mb-0">{{player?.position}}</p>
+                    </div>
+                    <div class="px-3">
+                      <p class="small text-muted mb-1">Salary</p>
+                      <p class="mb-0">{{player?.salary}}</p>
+                    </div>
+                  </div>
+                <div class="d-flex justify-content-start rounded-3 p-2 mb-2 bg-body-tertiary">
+                  <div>
+                    <p class="small text-muted mb-1">Points</p>
+                    <p class="mb-0">{{player?.points}}</p>
+                  </div>
+                  <div class="px-3">
+                    <p class="small text-muted mb-1">Rebounds</p>
+                    <p class="mb-0">{{player?.rebound}}</p>
+                  </div>
+                  <div class="px-3">
+                    <p class="small text-muted mb-1">Assists</p>
+                    <p class="mb-0">{{player?.assists}}</p>
+                  </div>
+                  <div class="px-3">
+                    <p class="small text-muted mb-1">Steals</p>
+                    <p class="mb-0">{{player?.steals}}</p>
+                  </div>
+                  <div class="px-3">
+                    <p class="small text-muted mb-1">Blocks</p>
+                    <p class="mb-0">{{player?.blocks}}</p>
+                  </div>
+                </div>
+                <div class="d-flex pt-1">
+                  <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary me-1 flex-grow-1">Add to Injury</button>
+                  <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary me-1 flex-grow-1">Extend Contract</button>
+                  <button type="button" (click)="tryDeletePlayer(player.id);" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary flex-grow-1" data-bs-toggle="modal" data-bs-target="#deleteModal">Remove</button>
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<div *ngIf="!players.length" class="col-lg-12 col-md-12 col-xl-12">
+  <div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">NO PLAYERS!</h4>
+    <p>No players were found. Try recruiting some at the free agent market!</p>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Remove Player</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to remove this player?
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="closeModalButton" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+          <button type="button" (click)="onDeletePlayer();" class="btn btn-primary">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
