@@ -4,6 +4,10 @@ import { PlayerService } from './player.service';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
+import { InjuryReserve } from '../injury/injuryReserve';
+import { InjuryService } from '../injury/injury.service';
+import { ContractService } from '../contract/contract.service';
+import { Contract } from '../contract/contract';
 
 @Component({
   selector: 'app-player',
@@ -17,8 +21,13 @@ export class PlayerComponent implements OnInit{
   public size!: number;
   public salary!: number;
   public deletePlayer: number = 0;
+  public injured!: InjuryReserve;
+  public injuredList: number[] = [];
+  public contract!: Contract;
+  public contractList: number[] = [];
+  public validation!: boolean;
 
-  constructor(private playerService: PlayerService) {
+  constructor(private playerService: PlayerService, private injuryService: InjuryService, private contractService: ContractService) {
     this.players = [];
    }
 
@@ -26,6 +35,21 @@ export class PlayerComponent implements OnInit{
     this.getPlayers();
     this.getSize();
     this.getSalary();
+    this.getInjured();
+    this.getContracts();
+  }
+
+  public validateRoster(): void{
+    this.playerService.validateRoster().subscribe(
+      {
+        next: (response: string)=>{
+          this.validation = true;
+        },
+        error: (error: HttpErrorResponse) => {
+          this.validation = false;
+        }
+      }
+    )
   }
 
   public getPlayers(): void{
@@ -71,6 +95,57 @@ export class PlayerComponent implements OnInit{
     this.deletePlayer = playerId;
   }
 
+  public setInjured(playerId: number, playerName: string){
+    this.injured = {
+      id: playerId,
+      name: playerName,
+      seq: -1
+    }
+  }
+
+  public setContract(playerId: number, playerName: string, point: number){
+    this.contract= {
+      id: playerId,
+      name: playerName,
+      points: point,
+      seq: -1
+    }
+  }
+
+  public onEnqueueContract(): void{
+    this.contractService.enqueueContract(this.contract).subscribe(
+      {
+        next: (response: InjuryReserve) => {
+          console.log(response);
+          alert("Player added to contract extension queue");
+          this.getPlayers();
+          this.getContracts();
+        },
+        error: (error: HttpErrorResponse) => {
+          alert(error.error.message);
+        }
+      }
+    )
+    document.getElementById("closeContractButton")?.click();
+  }
+
+  public onAddInjury(): void{
+    this.injuryService.pushInjured(this.injured).subscribe(
+      {
+        next: (response: InjuryReserve) => {
+          console.log(response);
+          alert("Player added to injury reserve.");
+          this.getPlayers();
+          this.getInjured();
+        },
+        error: (error: HttpErrorResponse) => {
+          alert(error.error.message);
+        }
+      }
+    )
+    document.getElementById("closeInjuryButton")?.click();
+  }
+
   public onDeletePlayer(): void{
     this.playerService.deletePlayers(this.deletePlayer).subscribe(
       {
@@ -102,4 +177,38 @@ export class PlayerComponent implements OnInit{
     );
     console.log(searchForm.value);
   }
+
+  public getInjured(): void{
+    this.injuryService.getInjuryReserve().subscribe(
+      {
+        next: (response: InjuryReserve[])=>{
+          var tempList: number[] = [];
+          response.forEach(function (value){
+            tempList.push(value.id);
+          })
+          this.injuredList=tempList;
+        },
+        error: (error: HttpErrorResponse) => {
+          alert(error.error.message);
+        }
+      }
+      )
+    }
+
+    public getContracts(): void{
+      this.contractService.getContracts().subscribe(
+        {
+          next: (response: Contract[])=>{
+            var tempList: number[] = [];
+            response.forEach(function (value){
+              tempList.push(value.id);
+            })
+            this.contractList=tempList;
+          },
+          error: (error: HttpErrorResponse) => {
+            alert(error.error.message);
+          }
+        }
+        )
+      }
 }

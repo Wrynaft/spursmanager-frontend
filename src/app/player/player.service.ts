@@ -36,6 +36,10 @@ export class PlayerService {
     return this.http.get<number>(`${this.apiServerUrl}/players/salary`);
   }
 
+  public validateRoster(): Observable<string>{
+    return this.http.get<string>(`${this.apiServerUrl}/players/validate`);
+  }
+
   public searchPlayers(searchParams: Map<string, string>): Observable<Player[]>{
     return this.http.post<Player[]>(`${this.apiServerUrl}/players/search`, searchParams);
   }
