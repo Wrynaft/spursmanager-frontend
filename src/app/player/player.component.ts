@@ -37,6 +37,7 @@ export class PlayerComponent implements OnInit{
     this.getSalary();
     this.getInjured();
     this.getContracts();
+    this.validateRoster();
   }
 
   public validateRoster(): void{
