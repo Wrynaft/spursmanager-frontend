@@ -19,7 +19,7 @@ import { Contract } from '../contract/contract';
 export class PlayerComponent implements OnInit{
   public players: Player[];
   public size!: number;
-  public salary!: number;
+  public salary?: number;
   public deletePlayer: number = 0;
   public injured!: InjuryReserve;
   public injuredList: number[] = [];
@@ -169,7 +169,7 @@ export class PlayerComponent implements OnInit{
     this.playerService.searchPlayers(searchForm.value).subscribe(
       {
         next: (response: Player[])=>{
-          alert('Yay');
+          this.players = response;
         },
         error: (error: HttpErrorResponse) => {
           alert(error.error.message);
@@ -212,4 +212,20 @@ export class PlayerComponent implements OnInit{
         }
         )
       }
+    
+    public clearRoster(): void{
+      this.playerService.clearRoster().subscribe(
+        {
+          next: (response: void) =>{
+            alert("The roster has been cleared, time to build a new one!");
+            this.getPlayers();
+            this.getSalary();
+            this.getSize();
+          },
+          error: (error: HttpErrorResponse) => {
+            alert(error.error.message);
+          }
+        }
+      )
+    }
 }

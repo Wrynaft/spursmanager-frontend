@@ -16,7 +16,7 @@ export class FreeagentComponent implements OnInit{
   public freeagents: Player[];
   public addingPlayer!: Player;
   public size!: number;
-  public salary!: number;
+  public salary?: number;
 
   constructor(private freeAgentService: FreeagentService, private playerService: PlayerService) {
     this.freeagents = [];

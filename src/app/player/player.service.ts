@@ -43,4 +43,12 @@ export class PlayerService {
   public searchPlayers(searchParams: Map<string, string>): Observable<Player[]>{
     return this.http.post<Player[]>(`${this.apiServerUrl}/players/search`, searchParams);
   }
+
+  public clearRoster(): Observable<void>{
+    return this.http.delete<void>(`${this.apiServerUrl}/players/clear`);
+  }
+
+  public getRanking(): Observable<Player[]>{
+    return this.http.get<Player[]>(`${this.apiServerUrl}/players/ranking`);
+  }
 }

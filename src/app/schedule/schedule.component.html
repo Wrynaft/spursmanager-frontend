@@ -19,8 +19,8 @@
 <div class="px-4">
     <h1>Shortest Distance: {{distance}}km</h1>
   </div>
-<div class="text-center mx-auto" #network id="network"></div>
+  <button type="button" (click)="generateGraph()" class="btn btn-primary btn-lg mx-4">See Graph</button>
 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-    <button type="button" (click)="generateGraph()" class="btn btn-primary btn-lg px-4 gap-3">See Graph</button>
-  </div>
+  <div class="text-center mx-auto" #network id="network"></div>
+</div>
   

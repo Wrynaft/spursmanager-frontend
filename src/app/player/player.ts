@@ -11,6 +11,5 @@ export interface Player {
     assists: number;
     steals: number;
     blocks: number;
-    matchesPlayed: number;
-    contractLength: number;
+    compScore: number;
 }

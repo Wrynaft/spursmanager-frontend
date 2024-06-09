@@ -5,6 +5,7 @@ import { FreeagentComponent } from './freeagent/freeagent.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { InjuryComponent } from './injury/injury.component';
 import { ContractComponent } from './contract/contract.component';
+import { RankingComponent } from './ranking/ranking.component';
 
 export const routes: Routes = [
     {path: '', component: DefaultComponent},
@@ -12,5 +13,6 @@ export const routes: Routes = [
     {path: 'freeagent', component: FreeagentComponent},
     {path: 'schedule', component: ScheduleComponent},
     {path: 'injury', component: InjuryComponent},
-    {path: 'contract', component: ContractComponent}
+    {path: 'contract', component: ContractComponent},
+    {path: 'ranking', component: RankingComponent}
 ];
