@@ -4,22 +4,26 @@ import { FreeagentService } from './freeagent.service';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { PlayerService } from '../player/player.service';
+import { FormsModule, NgForm } from '@angular/forms';
+import { searchAgent } from './searchAgent';
 
 @Component({
   selector: 'app-freeagent',
   standalone: true,
-  imports: [HttpClientModule, CommonModule],
+  imports: [HttpClientModule, CommonModule, FormsModule],
   templateUrl: './freeagent.component.html',
   styleUrl: './freeagent.component.css'
 })
 export class FreeagentComponent implements OnInit{
   public freeagents: Player[];
+  public searchedagents: Player[];
   public addingPlayer!: Player;
   public size!: number;
   public salary?: number;
 
   constructor(private freeAgentService: FreeagentService, private playerService: PlayerService) {
     this.freeagents = [];
+    this.searchedagents = [];
   }
 
   ngOnInit(){
@@ -34,6 +38,7 @@ export class FreeagentComponent implements OnInit{
       {
         next: (response: Player[])=>{
           this.freeagents = response;
+          this.searchedagents = this.freeagents;
         },
         error: (error: HttpErrorResponse) => {
           alert(error.message);
@@ -87,5 +92,23 @@ export class FreeagentComponent implements OnInit{
       }
     )
     document.getElementById("closeModalButton")?.click();
+  }
+
+  public onSearchAgent(searchForm: NgForm): void{
+    let searchAgent = {
+      searchParams: searchForm.value,
+      agentList: this.freeagents
+    }
+    console.log(searchAgent)
+    this.freeAgentService.searchAgents(searchAgent).subscribe(
+      {
+        next: (response: Player[])=>{
+          this.searchedagents = response;
+        },
+        error: (error: HttpErrorResponse) => {
+          alert(error.error.message);
+        }
+      }
+    );
   }
 }
